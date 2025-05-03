@@ -1,2 +1,36 @@
 # PythonJS
-A Small Custom Programming Language Project that merges Python and Javascript with it's custom shell.
+
+A hybrid programming language and shell combining Python and JavaScript features.
+
+## Features
+- Custom shell with commands: `new`, `cd`, `run`, `support`
+- `.pyjs` files: Write code in a Python+JS style
+- Notepad integration for editing
+- Discord support chat (coming soon)
+
+## Usage
+1. Open a terminal in this folder.
+2. Run the shell:
+   ```
+   python pythonjs_shell.py
+   ```
+3. Use commands like:
+   - `new myscript.pyjs` (edit in Notepad)
+   - `run myscript.pyjs`
+   - `cd path/to/dir`
+   - `support your message here`
+
+## File Association (Windows)
+To associate `.pyjs` files to run with PythonJS Shell:
+
+1. Right-click a `.pyjs` file > Open with > Choose another app
+2. Browse to your Python executable (e.g., `python.exe`)
+3. Add arguments:
+   - Target: `pythonw.exe C:\Users\mrcel\pythonjs\pythonjs_shell.py "%1"`
+4. (Optional) Use a .reg file for advanced association.
+
+---
+
+## Coming Soon
+- PythonJS interpreter
+- Discord support chat
