@@ -1,0 +1,2 @@
+DISCORD_BOT_TOKEN = 'Ur Own'
+SUPPORT_USER_ID = Ur Own

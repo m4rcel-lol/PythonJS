@@ -1,0 +1,42 @@
+def print_banner():
+    print("╔" + "═" * 32 + "╗")
+    print("║{:^32s}║".format("PythonJS Calculator"))
+    print("╠" + "═" * 32 + "╣")
+    print("║{:^32s}║".format(" [ + ]  [ - ]  [ * ]  [ / ] "))
+    print("╚" + "═" * 32 + "╝")
+
+print_banner()
+while True:
+    print("\nEnter your calculation (or type 'exit' to quit):")
+    a = input("  First number: ")
+    if a.lower() == "exit":
+        print("Goodbye!")
+        break
+    b = input("  Second number: ")
+    op = input("  Operation (+, -, *, /): ")
+
+    try:
+        a = float(a)
+        b = float(b)
+    except:
+        print("  [!] Please enter valid numbers.")
+        continue
+
+    if op == "+":
+        result = a + b
+    elif op == "-":
+        result = a - b
+    elif op == "*":
+        result = a * b
+    elif op == "/":
+        if b == 0:
+            print("  [!] Error: Division by zero")
+            continue
+        result = a / b
+    else:
+        print("  [!] Invalid operation")
+        continue
+
+    print("╔" + "═" * 32 + "╗")
+    print("║{:^32s}║".format(f"Result: {result}"))
+    print("╚" + "═" * 32 + "╝")
