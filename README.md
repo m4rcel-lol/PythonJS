@@ -9,7 +9,8 @@ A hybrid programming language and shell combining Python and JavaScript features
 - Discord support chat (coming soon)
 
 ## Usage
-1. Run the shell by:
+1. Install PythonJS by going to Releases > PythonJS Release Version 2.0 > `bootstrap_pythonjs.py`
+2. Run the shell by:
    ```
    python pythonjs_shell.py
    ```
