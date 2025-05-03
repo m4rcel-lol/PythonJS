@@ -16,7 +16,7 @@
    ```
 or by running `pythonjs_shell.py` file manually
 
-2. ⌨️ Use commands like:
+## ⌨️ Use commands like:
    - `new myscript.pyjs` (edit in Notepad)
    - `run myscript.pyjs`
    - `cd path/to/dir`
