@@ -9,16 +9,17 @@ A hybrid programming language and shell combining Python and JavaScript features
 - Discord support chat (coming soon)
 
 ## Usage
-1. Open a terminal in this folder.
-2. Run the shell:
+1. Download `bootstrap_pythonjs.py` and run.
+2. Run the shell either by:
    ```
    python pythonjs_shell.py
    ```
+or running `pythonjs_shell.py`
 3. Use commands like:
    - `new myscript.pyjs` (edit in Notepad)
    - `run myscript.pyjs`
    - `cd path/to/dir`
-   - `support your message here`
+   - `support "your message here"`
 
 ## File Association (Windows)
 To associate `.pyjs` files to run with PythonJS Shell:
@@ -31,6 +32,5 @@ To associate `.pyjs` files to run with PythonJS Shell:
 
 ---
 
-## Coming Soon
-- PythonJS interpreter
+## CWO [Currently Working On] Features
 - Discord support chat
