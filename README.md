@@ -1,14 +1,14 @@
-# PythonJS
+# 💻 PythonJS
 
-A hybrid programming language and shell combining Python and JavaScript features.
+🖼️ A hybrid programming language and shell combining Python and JavaScript features.
 
-## Features
+## ⚙️ Features
 - Custom shell with commands: `new`, `cd`, `run`, `support`
 - `.pyjs` files: Write code in a Python+JS style
 - Notepad integration for editing
 - Discord support chat (coming soon)
 
-## Usage
+## 🪴 Usage
 1. Install PythonJS by going to Releases > PythonJS Release Version 2.0 > `bootstrap_pythonjs.py`
 2. Run the shell by:
    ```
@@ -16,13 +16,13 @@ A hybrid programming language and shell combining Python and JavaScript features
    ```
 or by running `pythonjs_shell.py` file manually
 
-2. Use commands like:
+2. ⌨️ Use commands like:
    - `new myscript.pyjs` (edit in Notepad)
    - `run myscript.pyjs`
    - `cd path/to/dir`
    - `support your message here`
 
-## File Association (Windows)
+## 😎 File Association (Windows)
 To associate `.pyjs` files to run with PythonJS Shell:
 
 1. Right-click a `.pyjs` file > Open with > Choose another app
@@ -33,5 +33,5 @@ To associate `.pyjs` files to run with PythonJS Shell:
 
 ---
 
-## CWO [ CURRENTLY WORKING ON ] FEATURE(S)
+## 🔨 CWO [ CURRENTLY WORKING ON ] FEATURE(S)
 - Discord support chat
