@@ -200,7 +200,8 @@ Commands:
                                 print(Fore.RED + "Failed to install nano automatically. Opening with Notepad instead." + Style.RESET_ALL)
                                 subprocess.call(['notepad', filename])
                         else:
-                            print(Fore.RED + "Nano not found and installation already attempted. Opening with Notepad instead."                                subprocess.call(['notepad', filename])
+                            print(Fore.RED + "Nano not found and installation already attempted. Opening with Notepad instead." + Style.RESET_ALL)
+                            subprocess.call(['notepad', filename])
             elif command == 'run':
                 if not args or not args[0].endswith('.pyjs'):
                     print(Fore.RED + 'Usage: run [filename.pyjs]' + getattr(Style, 'RESET_ALL', ''))
