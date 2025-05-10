@@ -42,6 +42,7 @@ if not os.path.exists(FILES_DIR):
     os.makedirs(FILES_DIR)
 
 CURRENT_DIR = FILES_DIR
+nano_installed = False  # Track if nano install was attempted
 
 def interpret_pyjs_file(filename):
     """
@@ -94,7 +95,7 @@ def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def shell():
-    global CURRENT_DIR
+    global CURRENT_DIR, nano_installed
     print(Fore.CYAN + getattr(Style, 'BRIGHT', '') + """
 ╔════════════════════════════════════╗
 ║       Welcome to PythonJS Shell!   ║
@@ -162,13 +163,44 @@ Commands:
                             interpret_pyjs_file(filename)
             elif command == 'nano':
                 if not args or not args[0].endswith('.pyjs'):
-                    print(Fore.RED + 'Usage: nano [filename.pyjs]' + getattr(Style, 'RESET_ALL', ''))
+                    print(Fore.RED + 'Usage: nano [filename.pyjs]' + Style.RESET_ALL)
                 else:
                     filename = os.path.join(CURRENT_DIR, args[0])
-                    if os.path.exists(filename):
+                    if not os.path.exists(filename):
+                        print(Fore.RED + 'File does not exist.' + Style.RESET_ALL)
+                        continue
+                    try:
                         subprocess.call(['nano', filename])
-                    else:
-                        print(Fore.RED + 'File does not exist.' + getattr(Style, 'RESET_ALL', ''))
+                    except FileNotFoundError:
+                        if not nano_installed:
+                            print(Fore.YELLOW + "Nano not found. Attempting to install nano..." + Style.RESET_ALL)
+                            nano_installed = True
+                            installed = False
+                            # Try Chocolatey
+                            try:
+                                subprocess.check_call(['choco', 'install', 'nano', '-y'])
+                                installed = True
+                            except Exception:
+                                pass
+                            # If Chocolatey failed, try winget
+                            if not installed:
+                                try:
+                                    subprocess.check_call(['winget', 'install', '--id', 'GNU.nano', '-e', '--accept-source-agreements', '--accept-package-agreements'])
+                                    installed = True
+                                except Exception:
+                                    pass
+                            if installed:
+                                print(Fore.GREEN + "Nano installed successfully. Launching nano..." + Style.RESET_ALL)
+                                try:
+                                    subprocess.call(['nano', filename])
+                                except FileNotFoundError:
+                                    print(Fore.RED + "Nano still not found after installation. Opening with Notepad instead." + Style.RESET_ALL)
+                                    subprocess.call(['notepad', filename])
+                            else:
+                                print(Fore.RED + "Failed to install nano automatically. Opening with Notepad instead." + Style.RESET_ALL)
+                                subprocess.call(['notepad', filename])
+                        else:
+                            print(Fore.RED + "Nano not found and installation already attempted. Opening with Notepad instead."                                subprocess.call(['notepad', filename])
             elif command == 'run':
                 if not args or not args[0].endswith('.pyjs'):
                     print(Fore.RED + 'Usage: run [filename.pyjs]' + getattr(Style, 'RESET_ALL', ''))
@@ -182,7 +214,6 @@ Commands:
                 clear()
             elif command == 'whoami':
                 print(Fore.GREEN + f'Current user: {getpass.getuser()}' + getattr(Style, 'RESET_ALL', ''))
-            # Add other commands here as needed, unchanged from your original code
             else:
                 print(Fore.RED + f'Unknown command: {command}' + getattr(Style, 'RESET_ALL', ''))
         except KeyboardInterrupt:
