@@ -80,7 +80,9 @@ def run_pyjs_file(filename):
         while proc.poll() is None:
             if msvcrt.kbhit():
                 key = msvcrt.getch()
-                if key == b'\r':  # Ctrl+M is carriage return
+                # Ctrl+M is ASCII 13 (carriage return), but Enter also sends 13,
+                # so treat Enter as Ctrl+M proxy here
+                if key == b'\r':
                     print("\n[PythonJS] Ctrl+M detected, stopping user code...")
                     proc.terminate()
                     break
@@ -156,19 +158,11 @@ Commands:
                     print(Fore.RED + 'Usage: new [filename.pyjs]' + getattr(Style, 'RESET_ALL', ''))
                 else:
                     filename = os.path.join(CURRENT_DIR, args[0])
-                    subprocess.call(['notepad', filename])
-                    if os.path.exists(filename):
-                        run_now = input(Fore.CYAN + 'File saved. Run now? (y/n): ' + getattr(Style, 'RESET_ALL', '')).strip().lower()
-                        if run_now == 'y':
-                            interpret_pyjs_file(filename)
-            elif command == 'nano':
-                if not args or not args[0].endswith('.pyjs'):
-                    print(Fore.RED + 'Usage: nano [filename.pyjs]' + Style.RESET_ALL)
-                else:
-                    filename = os.path.join(CURRENT_DIR, args[0])
                     if not os.path.exists(filename):
-                        print(Fore.RED + 'File does not exist.' + Style.RESET_ALL)
-                        continue
+                        with open(filename, 'w', encoding='utf-8') as f:
+                            pass
+                        print(Fore.GREEN + f'Created new file: {filename}' + getattr(Style, 'RESET_ALL', ''))
+                    # Open with nano command logic
                     try:
                         subprocess.call(['nano', filename])
                     except FileNotFoundError:
@@ -176,13 +170,11 @@ Commands:
                             print(Fore.YELLOW + "Nano not found. Attempting to install nano..." + Style.RESET_ALL)
                             nano_installed = True
                             installed = False
-                            # Try Chocolatey
                             try:
                                 subprocess.check_call(['choco', 'install', 'nano', '-y'])
                                 installed = True
                             except Exception:
                                 pass
-                            # If Chocolatey failed, try winget
                             if not installed:
                                 try:
                                     subprocess.check_call(['winget', 'install', '--id', 'GNU.nano', '-e', '--accept-source-agreements', '--accept-package-agreements'])
@@ -201,6 +193,48 @@ Commands:
                                 subprocess.call(['notepad', filename])
                         else:
                             print(Fore.RED + "Nano not found and installation already attempted. Opening with Notepad instead." + Style.RESET_ALL)
+                            subprocess.call(['notepad', filename])
+                    run_now = input(Fore.CYAN + 'File saved. Run now? (y/n): ' + getattr(Style, 'RESET_ALL', '')).strip().lower()
+                    if run_now == 'y':
+                        interpret_pyjs_file(filename)
+            elif command =='nano':
+                if not args or not args[0].endswith('.pyjs'):
+                    print(Fore.RED + 'Usage: nano [filename.pyjs]' + getattr(Style, 'RESET_ALL', ''))
+                else:
+                    filename = os.path.join(CURRENT_DIR, args[0])
+                    if not os.path.exists(filename):
+                        print(Fore.RED + 'File does not exist.' + getattr(Style, 'RESET_ALL', ''))
+                        continue
+                    try:
+                        subprocess.call(['nano', filename])
+                    except FileNotFoundError:
+                        if not nano_installed:
+                            print(Fore.YELLOW + "Nano not found. Attempting to install nano..." + getattr(Style, 'RESET_ALL', ''))
+                            nano_installed = True
+                            installed = False
+                            try:
+                                subprocess.check_call(['choco', 'install', 'nano', '-y'])
+                                installed = True
+                            except Exception:
+                                pass
+                            if not installed:
+                                try:
+                                    subprocess.check_call(['winget', 'install', '--id', 'GNU.nano', '-e', '--accept-source-agreements', '--accept-package-agreements'])
+                                    installed = True
+                                except Exception:
+                                    pass
+                            if installed:
+                                print(Fore.GREEN + "Nano installed successfully. Launching nano..." + getattr(Style, 'RESET_ALL', ''))
+                                try:
+                                    subprocess.call(['nano', filename])
+                                except FileNotFoundError:
+                                    print(Fore.RED + "Nano still not found after installation. Opening with Notepad instead." + getattr(Style, 'RESET_ALL', ''))
+                                    subprocess.call(['notepad', filename])
+                            else:
+                                print(Fore.RED + "Failed to install nano automatically. Opening with Notepad instead." + getattr(Style, 'RESET_ALL', ''))
+                                subprocess.call(['notepad', filename])
+                        else:
+                            print(Fore.RED + "Nano not found and installation already attempted. Opening with Notepad instead." + getattr(Style, 'RESET_ALL', ''))
                             subprocess.call(['notepad', filename])
             elif command == 'run':
                 if not args or not args[0].endswith('.pyjs'):
