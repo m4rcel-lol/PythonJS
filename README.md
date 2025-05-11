@@ -11,11 +11,7 @@
 
 ## 🪴 Usage
 1. Install PythonJS by going to Releases > PythonJS Beta Version 0.6 > `Source Code (zip)`
-2. Run the shell by:
-   ```
-   python pythonjs_shell.py
-   ```
-or by running `pythonjs_shell.py` file manually
+2. To run the shell, open `pythonjs_shell.exe`
 
 ## ⌨️ Use commands like:
    - `new myscript.pyjs` (edit in nano)
