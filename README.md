@@ -10,7 +10,7 @@
 - Fully working `nano` File Editor, along with UTF-8 support
 
 ## 🪴 Usage
-1. Install PythonJS by going to Releases > PythonJS Release Version 2.0 > `Source Code (zip)`
+1. Install PythonJS by going to Releases > PythonJS Beta Version 0.6 > `Source Code (zip)`
 2. Run the shell by:
    ```
    python pythonjs_shell.py
